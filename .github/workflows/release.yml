@@ -15,7 +15,7 @@ jobs:
       - name: Build Collection
         uses: artis3n/ansible_galaxy_collection@v2
         with:
-          collection_dir: 'ansible_collections/f5networks/f5os'
+          collection_dir: 'ansible_collections/wojtek0806/f5os'
           api_key: '${{ secrets.GALAXY_API_KEY }}'
           publish: false
 
@@ -23,7 +23,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          artifacts: ansible_collections/f5networks/f5os/wojtek0806-f5os-${{ github.ref }}.tar.gz
+          artifacts: ansible_collections/wojtek0806/f5os/wojtek0806-f5os-${{ github.ref }}.tar.gz
           name: Release ${{ github.ref }}
           omitBody: true
           token: ${{ secrets.TEST_TOKEN }}
