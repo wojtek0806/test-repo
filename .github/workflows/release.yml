@@ -24,7 +24,8 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: 'ansible_collections/wojtek0806/f5os/wojtek0806-f5os-${{ github.ref }}.tar.gz'
+          artifacts: '${{ github.workspace }}/wojtek0806-f5os-{{ env.RELEASE_VERSION }}.tar.gz'
+          tag: '${{ env.RELEASE_VERSION }}'
           name: 'Release ${{ env.RELEASE_VERSION }}'
           omitBody: true
           token: '${{ secrets.TEST_TOKEN }}'
