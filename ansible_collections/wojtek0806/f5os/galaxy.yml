@@ -1,0 +1,20 @@
+authors:
+  - Wojciech Wypior (@wojtek0806)
+dependencies:
+  ansible.netcommon: ">=2.0.0,<5.0.0"
+description: F5OS based Collection for Ansible
+documentation: https://github.com/wojtek0806/test-repo
+homepage: https://github.com/wojtek0806/test-repo
+issues: https://github.com/wojtek0806/test-repo/issues
+license:
+  - GPL-3.0-only
+name: f5os
+namespace: wojtek0806
+readme: README.md
+repository: https://github.com/wojtek0806/test-repo
+tags:
+  - f5
+  - networking
+  - rseries
+  - velos
+version: 0.3.0

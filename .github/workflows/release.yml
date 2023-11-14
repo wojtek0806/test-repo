@@ -10,21 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Build Collection
+        uses: artis3n/ansible_galaxy_collection@v2
+        with:
+          collection_dir: 'ansible_collections/f5networks/f5os'
+          api_key: '${{ secrets.GALAXY_API_KEY }}'
+          publish: false
 
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TEST_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Release notes and description.
-
-      - name: Upload Custom Tarball
-        uses: actions/upload-artifact@v2
-        with:
-          name: custom-tarball
-          path: https://f5-ansible.s3.amazonaws.com/collections/f5networks-f5_modules-devel.tar.gz
+          artifacts: ansible_collections/f5networks/f5os/wojtek0806-f5os-${{ github.ref }}.tar.gz
+          name: Release ${{ github.ref }}
+          omitBody: true
+          token: ${{ secrets.TEST_TOKEN }}
