@@ -12,10 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Debug Git Describe
-        run: |
-          git describe --tags --abbrev=0
-
       - name: Build Collection
         uses: artis3n/ansible_galaxy_collection@v2
         with:
@@ -27,9 +23,9 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ github.workspace }}/wojtek0806-f5os-${{ github.ref}}.tar.gz"
-          tag: "${{ github.ref }}"
-          name: "Release ${{ github.ref }}"
+          artifacts: "wojtek0806-f5os-${{ github.ref_name }}.tar.gz"
+          tag: "${{ github.ref_name }}"
+          name: "Release ${{ github.ref_name }}"
           omitBody: true
           token: "${{ secrets.TEST_TOKEN }}"
 
