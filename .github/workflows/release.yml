@@ -10,29 +10,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get the version name from the tags
-        run: echo "RELEASE_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
 
       - name: Build Collection
         uses: artis3n/ansible_galaxy_collection@v2
         with:
           collection_dir: 'ansible_collections/wojtek0806/f5os'
-          api_key: '${{ secrets.GALAXY_API_KEY }}'
+          api_key: "${{ secrets.GALAXY_API_KEY }}"
           publish: false
 
       - name: Create GitHub Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: '${{ github.workspace }}/wojtek0806-f5os-{{ env.RELEASE_VERSION }}.tar.gz'
-          tag: '${{ env.RELEASE_VERSION }}'
-          name: 'Release ${{ env.RELEASE_VERSION }}'
+          artifacts: "${{ github.workspace }}/wojtek0806-f5os-${{ env.TAG }}.tar.gz"
+          tag: "${{ env.TAG }}"
+          name: "Release ${{ env.TAG }}"
           omitBody: true
-          token: '${{ secrets.TEST_TOKEN }}'
+          token: "${{ secrets.TEST_TOKEN }}"
 
       - name: Publish Collection
         uses: artis3n/ansible_galaxy_collection@v2
         with:
           collection_dir: 'ansible_collections/wojtek0806/f5os'
-          api_key: '${{ secrets.GALAXY_API_KEY }}'
+          api_key: "${{ secrets.GALAXY_API_KEY }}"
           build: false
