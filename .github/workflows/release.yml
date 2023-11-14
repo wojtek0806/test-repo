@@ -1,7 +1,9 @@
 name: GitHub Release
 
 on:
-  push
+  push:
+    tags:
+      - '*'
 
 jobs:
   create_release:
@@ -14,10 +16,6 @@ jobs:
         run: |
           git describe --tags --abbrev=0
 
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: echo "RELEASE_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_ENV
-
       - name: Build Collection
         uses: artis3n/ansible_galaxy_collection@v2
         with:
@@ -29,9 +27,9 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ github.workspace }}/wojtek0806-f5os-${{ env.TAG }}.tar.gz"
-          tag: "${{ env.TAG }}"
-          name: "Release ${{ env.TAG }}"
+          artifacts: "${{ github.workspace }}/wojtek0806-f5os-${{ github.ref}}.tar.gz"
+          tag: "${{ github.ref }}"
+          name: "Release ${{ github.ref }}"
           omitBody: true
           token: "${{ secrets.TEST_TOKEN }}"
 
